@@ -2,7 +2,6 @@ package com.example.nadithaharshana.musicplayer;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ public class customMusicAdapter extends BaseAdapter {
     private int layout;
     private ArrayList<MusicHandler> arrayList;
     private MediaPlayer mediaplayer;
-    private boolean flag = true;
+    private boolean isSongSet = false;
     private boolean isPaused = false;
 
     public customMusicAdapter(Context context, int layout, ArrayList<MusicHandler> arrayList) {
@@ -47,7 +46,7 @@ public class customMusicAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView txtName, txtSinger;
-        ImageView imageViewPlay, imageViewStop;
+        ImageView imageViewPlay, imageViewStop, ivmusic;
     }
 
     @Override
@@ -62,6 +61,7 @@ public class customMusicAdapter extends BaseAdapter {
             viewholder.txtSinger = (TextView) convertView.findViewById(R.id.txtSinger);
             viewholder.imageViewPlay = (ImageView) convertView.findViewById(R.id.imageViewPlay);
             viewholder.imageViewStop = (ImageView) convertView.findViewById(R.id.imageViewStop);
+            viewholder.ivmusic = (ImageView) convertView.findViewById(R.id.ivMusic);
 
             convertView.setTag(viewholder);
         } else {
@@ -77,21 +77,24 @@ public class customMusicAdapter extends BaseAdapter {
         viewholder.imageViewPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("from On click", "flag : " + flag + " isPuased : " + isPaused);
-                if (flag && !isPaused) {
+
+                if (!isSongSet) {
                     mediaplayer = MediaPlayer.create(context, music.getSong());
-                    flag = false;
+                    isSongSet = true;
                     mediaplayer.setVolume(50, 50);
                     mediaplayer.start();
                     viewholder.imageViewPlay.setImageResource(R.drawable.pause);
+                    viewholder.ivmusic.setImageResource(R.drawable.playing);
                 } else {
                     if (isPaused) {
                         mediaplayer.start();
                         viewholder.imageViewPlay.setImageResource(R.drawable.pause);
+                        viewholder.ivmusic.setImageResource(R.drawable.playing);
                         isPaused = false;
                     } else {
                         mediaplayer.pause();
                         viewholder.imageViewPlay.setImageResource(R.drawable.play);
+                        viewholder.ivmusic.setImageResource(R.drawable.music);
                         isPaused = true;
                     }
                 }
@@ -102,15 +105,18 @@ public class customMusicAdapter extends BaseAdapter {
         viewholder.imageViewStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!flag) {
-                    mediaplayer.stop();
-                    mediaplayer.release();
-                    flag = true;
-                    viewholder.imageViewPlay.setImageResource(R.drawable.play);
-                }
-
+                stop(viewholder);
+                viewholder.ivmusic.setImageResource(R.drawable.music);
             }
         });
         return convertView;
+    }
+    public void stop(ViewHolder viewholder){
+        if (isSongSet) {
+            mediaplayer.stop();
+            mediaplayer.release();
+            isSongSet = false;
+            viewholder.imageViewPlay.setImageResource(R.drawable.play);
+        }
     }
 }
