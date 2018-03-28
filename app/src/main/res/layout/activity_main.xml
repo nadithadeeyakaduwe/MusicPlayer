@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schem as.android.com/apk/res-auto"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.nadithaharshana.musicplayer.MainActivity">
 
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gifImageView"
+            android:layout_width="384dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="13dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/equi"
+            app2:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app2:layout_constraintEnd_toEndOf="parent"
+            app2:layout_constraintStart_toStartOf="parent"
+            app2:layout_constraintTop_toTopOf="parent" />
+
         <ListView
             android:id="@+id/song-list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="2dp"
+            app2:layout_constraintBottom_toBottomOf="parent"
+            app2:layout_constraintStart_toStartOf="parent"
+            app2:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="69dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:orientation="horizontal"
+            app2:layout_constraintBottom_toTopOf="@+id/song-list"
+            app2:layout_constraintEnd_toEndOf="parent"
+            app2:layout_constraintStart_toStartOf="parent"
+            app2:layout_constraintTop_toBottomOf="@+id/gifImageView">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app2:srcCompat="@android:drawable/ic_media_previous" />
+
+                <ImageView
+                    android:id="@+id/playUni"
+                    android:layout_width="178dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    app2:srcCompat="@android:drawable/ic_media_play" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app2:srcCompat="@android:drawable/ic_media_next" />
+        </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
