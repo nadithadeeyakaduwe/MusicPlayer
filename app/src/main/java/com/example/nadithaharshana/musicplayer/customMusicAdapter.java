@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,7 +47,8 @@ public class customMusicAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView txtName, txtSinger;
-        ImageView imageViewPlay, imageViewStop, ivmusic;
+        ImageView imageViewPlay, imageViewStop, ivmusic, paly;
+        ListView lv;
     }
 
     @Override
@@ -62,6 +64,8 @@ public class customMusicAdapter extends BaseAdapter {
             viewholder.imageViewPlay = (ImageView) convertView.findViewById(R.id.imageViewPlay);
             viewholder.imageViewStop = (ImageView) convertView.findViewById(R.id.imageViewStop);
             viewholder.ivmusic = (ImageView) convertView.findViewById(R.id.ivMusic);
+            viewholder.lv = (ListView) convertView.findViewById(R.id.song_list);
+            viewholder.paly = (ImageView) convertView.findViewById(R.id.playUni);
 
             convertView.setTag(viewholder);
         } else {
@@ -85,15 +89,18 @@ public class customMusicAdapter extends BaseAdapter {
                     mediaplayer.start();
                     viewholder.imageViewPlay.setImageResource(R.drawable.pause);
                     viewholder.ivmusic.setImageResource(R.drawable.playing);
+                    viewholder.paly.setImageResource(R.drawable.pause);
                 } else {
                     if (isPaused) {
                         mediaplayer.start();
                         viewholder.imageViewPlay.setImageResource(R.drawable.pause);
+                        viewholder.paly.setImageResource(R.drawable.pause);
                         viewholder.ivmusic.setImageResource(R.drawable.playing);
                         isPaused = false;
                     } else {
                         mediaplayer.pause();
                         viewholder.imageViewPlay.setImageResource(R.drawable.play);
+                        viewholder.paly.setImageResource(R.drawable.play);
                         viewholder.ivmusic.setImageResource(R.drawable.music);
                         isPaused = true;
                     }
@@ -101,6 +108,9 @@ public class customMusicAdapter extends BaseAdapter {
 
             }
         });
+
+
+
 
         viewholder.imageViewStop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +121,10 @@ public class customMusicAdapter extends BaseAdapter {
         });
         return convertView;
     }
+
+
+
+
     public void stop(ViewHolder viewholder){
         if (isSongSet) {
             mediaplayer.stop();
@@ -119,4 +133,5 @@ public class customMusicAdapter extends BaseAdapter {
             viewholder.imageViewPlay.setImageResource(R.drawable.play);
         }
     }
+
 }
